@@ -3,9 +3,7 @@ Gonigsberg
 
 A Go graph library
 
-Created for a computer science independent study elective on graph theory at North Seattle College.
-
-##TODO:
+###TODO:
 
 1. Undirected Graphs
   *Create
@@ -31,3 +29,7 @@ Created for a computer science independent study elective on graph theory at Nor
    *Dijkstra's Algorithm
 5. Figure out how to create a real TODO list in GitHub?
 
+###Notes
+Name is an uncreative amalgamation of *go* and Königsberg, the city whose seven bridges inspired Euler's Seven Bridge Problem, the origin of graph theory.
+
+Created for a computer science independent study elective on graph theory at North Seattle College.
