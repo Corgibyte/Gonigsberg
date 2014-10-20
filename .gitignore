@@ -22,3 +22,11 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+# Journal file for my class
+journal.md
+
+# Emacs leaves these lying around...
+.#*
+\#*
+*~
