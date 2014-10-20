@@ -1,10 +1,11 @@
 package graph
 
 import (
-	"search"
+	"sort"
 	"testing"
 )
 
+//Creates graph used for some testing
 func GraphForTest() *graph {
 	g := New()
 	a := "a"
@@ -32,7 +33,7 @@ func TestAdjacent(t *testing.T) {
 		t.Error("Too few/many adjacent nodes found")
 	}
 	contained := [...]string{a, c, d}
-	s = search.Strings(s)
+	s = sort.Strings(s)
 	for i, v := range contained {
 		if s[i] != v {
 			t.Errorf("%s should be %s", s[i], v)
