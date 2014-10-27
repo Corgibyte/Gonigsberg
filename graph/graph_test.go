@@ -23,17 +23,20 @@ func GraphForTest() *graph {
 	g.AddEdge(c, d)
 	g.AddEdge(d, b)
 	g.AddEdge(d, e)
-	return &g
+	return g
 }
 
 func TestAdjacent(t *testing.T) {
 	g := GraphForTest()
-	s := g.AdjacentTo(b)
-	if len(s) != 3 {
-		t.Error("Too few/many adjacent nodes found")
+	s, ok := g.AdjacentTo("b")
+	if ok != nil {
+		t.Logf("Adjacent doesn't work, message: %v", ok)
 	}
-	contained := [...]string{a, c, d}
-	s = sort.Strings(s)
+	if len(s) != 3 {
+		t.Errorf("Too few/many adjacent nodes found: %d should be 3", len(s))
+	}
+	contained := [...]string{"a", "c", "d"}
+	sort.Strings(s)
 	for i, v := range contained {
 		if s[i] != v {
 			t.Errorf("%s should be %s", s[i], v)
@@ -75,10 +78,11 @@ func TestZeroAdjacent(t *testing.T) {
 	g := New()
 	f := "f"
 	g.Add(f)
-	s := g.AdjacentTo(f)
+	s, ok := g.AdjacentTo(f)
+	if ok != nil {
+		t.Logf("Adjacent doesn't work, message: %v", ok)
+	}
 	if len(s) != 0 {
 		t.Errorf("There should be %d zero adjacent (found %d)", 0, len(s))
 	}
 }
-
-//TODO: Test String()?

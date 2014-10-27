@@ -13,9 +13,13 @@ type node struct {
 	value    string
 }
 
+func (n *node) Value() string {
+	return n.value
+}
+
 //Ths undirected graph holds string and is a mutable graph with edge weight 1
 type graph struct {
-	m        map[string]*node
+	nodes    map[string]*node
 	vertices int
 	edges    int
 }
@@ -37,19 +41,21 @@ func (g *graph) Edges() int {
 
 //Add vertice to the graph
 func (g *graph) Add(x string) (err error) {
-	_, ok := g.m[x]
+	_, ok := g.nodes[x]
 	if ok {
 		err = errors.New(fmt.Sprintf("%v already in graph", x))
 	}
 	n := node{make(map[*node]int), x}
-	g.m[x] = &n
+	g.nodes[x] = &n
 	g.vertices++
 	return nil
 }
 
+//Add an edge between two specified members of the graph
+//Returns an error if a or b are not in graph
 func (g *graph) AddEdge(a string, b string) (err error) {
-	aNode, aInGraph := g.m[a]
-	bNode, bInGraph := g.m[b]
+	aNode, aInGraph := g.nodes[a]
+	bNode, bInGraph := g.nodes[b]
 	if !aInGraph {
 		err = errors.New(fmt.Sprintf("%v not found in graph", a))
 		return
@@ -59,16 +65,19 @@ func (g *graph) AddEdge(a string, b string) (err error) {
 	}
 	aNode.adjacent[bNode] = 1
 	bNode.adjacent[aNode] = 1
+	g.edges++
 	return nil
 }
 
+//Gets all values that are adjacent (directly linked) to the specified value
+//Returns an error if s is not in the graph
 func (g *graph) AdjacentTo(s string) ([]string, error) {
-	sNode, ok := g.m[s]
+	sNode, ok := g.nodes[s]
 	if !ok {
 		err := errors.New(fmt.Sprintf("%v not in graph", s))
 		return nil, err
 	}
-	adjStrings := make([]string, 5)
+	adjStrings := make([]string, 0)
 	for adj, _ := range sNode.adjacent {
 		adjStrings = append(adjStrings, adj.value)
 	}
