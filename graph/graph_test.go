@@ -18,11 +18,11 @@ func GraphForTest() *graph {
 	g.Add(c)
 	g.Add(d)
 	g.Add(e)
-	g.AddEdge(a, b)
-	g.AddEdge(b, c)
-	g.AddEdge(c, d)
-	g.AddEdge(d, b)
-	g.AddEdge(d, e)
+	g.AddEdge(a, b, 1)
+	g.AddEdge(b, c, 1)
+	g.AddEdge(c, d, 1)
+	g.AddEdge(d, b, 1)
+	g.AddEdge(d, e, 1)
 	return g
 }
 
@@ -41,6 +41,45 @@ func TestAdjacent(t *testing.T) {
 		if s[i] != v {
 			t.Errorf("%s should be %s", s[i], v)
 		}
+	}
+}
+
+func TestEdgeWeights(t *testing.T) {
+	g := New()
+	g.Add("a")
+	g.Add("b")
+	g.Add("c")
+	g.AddEdge("a", "b", 2)
+	g.AddEdge("a", "c", 4)
+	edges, _ := g.AdjacentEdges("a")
+	if len(edges) != 2 {
+		t.Error("Wrong number of edges returned")
+	}
+	bWeight, bOk := edges["b"]
+	cWeight, cOk := edges["c"]
+	if !bOk || !cOk {
+		t.Error("Didn't return one of the edges.")
+	}
+	if bWeight != 2 {
+		t.Errorf("bWeight wrong: %d", bWeight)
+	}
+	if cWeight != 4 {
+		t.Errorf("cWeight wrong: %d", cWeight)
+	}
+}
+
+func TestZeroEdgeWeight(t *testing.T) {
+	g := New()
+	g.Add("a")
+	g.Add("b")
+	g.AddEdge("a", "b", 0)
+	edges, _ := g.AdjacentEdges("a")
+	if len(edges) != 1 {
+		t.Error("Wrong number of edges returned")
+	}
+	weight, _ := edges["b"]
+	if weight != 0 {
+		t.Errorf("Weight wrong: %d", weight)
 	}
 }
 

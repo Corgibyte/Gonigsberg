@@ -53,7 +53,7 @@ func (g *graph) Add(x string) (err error) {
 
 //Add an edge between two specified members of the graph
 //Returns an error if a or b are not in graph
-func (g *graph) AddEdge(a string, b string) (err error) {
+func (g *graph) AddEdge(a string, b string, weight int) (err error) {
 	aNode, aInGraph := g.nodes[a]
 	bNode, bInGraph := g.nodes[b]
 	if !aInGraph {
@@ -63,8 +63,8 @@ func (g *graph) AddEdge(a string, b string) (err error) {
 		err = errors.New(fmt.Sprintf("%v not found in graph", b))
 		return
 	}
-	aNode.adjacent[bNode] = 1
-	bNode.adjacent[aNode] = 1
+	aNode.adjacent[bNode] = weight
+	bNode.adjacent[aNode] = weight
 	g.edges++
 	return nil
 }
@@ -82,4 +82,19 @@ func (g *graph) AdjacentTo(s string) ([]string, error) {
 		adjStrings = append(adjStrings, adj.value)
 	}
 	return adjStrings, nil
+}
+
+//Gets all values that are adjacent to the specified value and the weight
+//Of the edges between them
+func (g *graph) AdjacentEdges(s string) (map[string]int, error) {
+	sNode, ok := g.nodes[s]
+	if !ok {
+		err := errors.New(fmt.Sprintf("%v not in graph", s))
+		return nil, err
+	}
+	adjEdges := make(map[string]int)
+	for n, weight := range sNode.adjacent {
+		adjEdges[n.Value()] = weight
+	}
+	return adjEdges, nil
 }
