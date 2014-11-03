@@ -5,15 +5,21 @@ import (
 )
 
 type edge struct {
-	target node
+	target *node
 	weight int
 	index  int
 }
 
 type priority []*edge
 
-func (p *priority) Add(a node, i int) {
+func (p *priority) Next() *node {
+	x := heap.Pop(p).(*edge)
+	return x.target
+}
+
+func (p *priority) Add(a *node, i int) {
 	heap.Push(p, &edge{a, i, -1})
+	heap.Init(p)
 }
 
 func (p *priority) Push(x interface{}) {
@@ -27,7 +33,7 @@ func (p *priority) Pop() interface{} {
 	old := *p
 	n := len(old)
 	item := old[n-1]
-	item.index = -1 //for safety
+	item.index = -2 //for safety
 	*p = old[0 : n-1]
 	return item
 }

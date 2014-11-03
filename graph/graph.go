@@ -53,7 +53,12 @@ func (g *graph) Add(x string) (err error) {
 
 //Add an edge between two specified members of the graph
 //Returns an error if a or b are not in graph
+//Returns an error if weight is negative
 func (g *graph) AddEdge(a string, b string, weight int) (err error) {
+	if weight < 0 {
+		err = errors.New(fmt.Sprintf("Cannot have negative weight: %d", weight))
+		return
+	}
 	aNode, aInGraph := g.nodes[a]
 	bNode, bInGraph := g.nodes[b]
 	if !aInGraph {
