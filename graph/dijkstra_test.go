@@ -69,8 +69,8 @@ func TestNoPath(t *testing.T) {
 	if s != nil {
 		t.Error("Path should be nil!")
 	}
-	if ok == nil {
-		t.Error("Error from empty path shouldn't be nil!")
+	if ok != nil {
+		t.Error("Error from empty path should be nil!")
 	}
 }
 

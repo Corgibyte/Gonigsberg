@@ -44,8 +44,8 @@ func (g *graph) Path(source string, target string) (path []string, err error) {
 		}
 	}
 	//Did we find target?
-	if best == nil {
-		path = make([]string, 0)
+	if best.value != target {
+		path = nil
 		err = nil
 		return
 	}
