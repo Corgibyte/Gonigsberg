@@ -2,7 +2,6 @@ package graph
 
 import (
 	"container/heap"
-	"fmt"
 	"testing"
 )
 
@@ -22,8 +21,8 @@ func TestPopEmpty(t *testing.T) {
 	h := make(priority, 0)
 	h.Add(&node{nil, "a"}, 1)
 	heap.Init(&h)
-	for i := 0; i < 1; i++ {
-		x := heap.Pop(&h).(*edge)
-		fmt.Println(x.target.value)
+	x := heap.Pop(&h).(*edge)
+	if x.target.value != "a" {
+		t.Errorf("Something wrong with the priority queue.")
 	}
 }
