@@ -3,6 +3,9 @@
 *.a
 *.so
 
+# Don't want compiled source to be uploaded
+Gonigsberg*
+
 # Folders
 _obj
 _test
@@ -30,3 +33,6 @@ journal.md
 .#*
 \#*
 *~
+
+# Not sure I want .idea folder to be part of project
+.idea
