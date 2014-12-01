@@ -18,32 +18,32 @@ func (n *node) Value() string {
 }
 
 //Ths undirected graph holds string and is a mutable graph with edge weight 1
-type graph struct {
+type Graph struct {
 	nodes    map[string]*node
 	vertices int
 	edges    int
 }
 
 //Get new, blank graph
-func New() *graph {
-	return &graph{make(map[string]*node), 0, 0}
+func New() *Graph {
+	return &Graph{make(map[string]*node), 0, 0}
 }
 
 //Number of vertices in the graph
-func (g *graph) Vertices() int {
+func (g *Graph) Vertices() int {
 	return g.vertices
 }
 
-//Number of edges in the graph
-func (g *graph) Edges() int {
+//Number of edges in the Graph
+func (g *Graph) Edges() int {
 	return g.edges
 }
 
-//Add vertice to the graph
-func (g *graph) Add(x string) (err error) {
+//Add vertice to the Graph
+func (g *Graph) Add(x string) (err error) {
 	_, ok := g.nodes[x]
 	if ok {
-		err = errors.New(fmt.Sprintf("%v already in graph", x))
+		err = errors.New(fmt.Sprintf("%v already in Graph", x))
 	}
 	n := node{make(map[*node]int), x}
 	g.nodes[x] = &n
@@ -54,7 +54,7 @@ func (g *graph) Add(x string) (err error) {
 //Add an edge between two specified members of the graph
 //Returns an error if a or b are not in graph
 //Returns an error if weight is negative
-func (g *graph) AddEdge(a string, b string, weight int) (err error) {
+func (g *Graph) AddEdge(a string, b string, weight int) (err error) {
 	if weight < 0 {
 		err = errors.New(fmt.Sprintf("Cannot have negative weight: %d", weight))
 		return
@@ -75,8 +75,8 @@ func (g *graph) AddEdge(a string, b string, weight int) (err error) {
 }
 
 //Gets all values that are adjacent (directly linked) to the specified value
-//Returns an error if s is not in the graph
-func (g *graph) AdjacentTo(s string) ([]string, error) {
+//Returns an error if s is not in the Graph
+func (g *Graph) AdjacentTo(s string) ([]string, error) {
 	sNode, ok := g.nodes[s]
 	if !ok {
 		err := errors.New(fmt.Sprintf("%v not in graph", s))
@@ -91,7 +91,7 @@ func (g *graph) AdjacentTo(s string) ([]string, error) {
 
 //Gets all values that are adjacent to the specified value and the weight
 //Of the edges between them
-func (g *graph) AdjacentEdges(s string) (map[string]int, error) {
+func (g *Graph) AdjacentEdges(s string) (map[string]int, error) {
 	sNode, ok := g.nodes[s]
 	if !ok {
 		err := errors.New(fmt.Sprintf("%v not in graph", s))

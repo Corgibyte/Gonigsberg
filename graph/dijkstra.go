@@ -4,7 +4,7 @@ import (
 	"errors"
 )
 
-func (g *graph) Path(source string, target string) (path []string, err error) {
+func (g *Graph) Path(source string, target string) (path []string, err error) {
 	//priority queue
 	pq := make(priority, 0)
 	//distance from source to specified node
