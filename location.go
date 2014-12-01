@@ -1,11 +1,11 @@
-package location
+package Gonigsberg
 
 type location struct {
 	serial string
 	name   string
 }
 
-func New(serial string, name string) location {
+func NewLocation(serial string, name string) location {
 	return location{serial, name}
 }
 
